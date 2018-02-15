@@ -19,10 +19,11 @@ class App extends React.Component {
   };
 
   render() {
+    const { users } = this.state;
     return (
       <div>
         <HomePage />
-        <UserPage users={this.state.users} onClickDelete={this.onClickDelete} />
+        <UserPage users={users} onClickDelete={this.onClickDelete} />
       </div>
     );
   }
