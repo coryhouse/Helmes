@@ -1,35 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
+import { user } from "./types";
 
-class UserPage extends Component {
-  onClickDelete(event, userId) {
-    const users = this.state.users.filter(user => user.id !== userId);
-    this.setState({ users });
-    alert(`deleted ${userId}`);
-  }
+const UserPage = props => (
+  <div>
+    <h1>Users</h1>
+    <ul>
+      {props.users.map(user => {
+        return (
+          <li key={user.id}>
+            <button
+              onClick={event => {
+                props.onClickDelete(event, user.id);
+              }}
+            >
+              Delete
+            </button>{" "}
+            {user.name} - {user.email}
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-        <h1>Users</h1>
-        <ul>
-          {this.state.users.map(user => {
-            return (
-              <li key={user.id}>
-                <button
-                  onClick={event => {
-                    this.onClickDelete(event, user.id);
-                  }}
-                >
-                  Delete
-                </button>{" "}
-                {user.name} - {user.email}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  }
-}
+UserPage.propTypes = {
+  users: PropTypes.arrayOf(user).isRequired,
+  onClickDelete: PropTypes.func.isRequired
+};
 
 export default UserPage;

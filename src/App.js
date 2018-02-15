@@ -12,10 +12,17 @@ class App extends React.Component {
     page: "HomePage"
   };
 
+  onClickDelete = (event, userId) => {
+    const users = this.state.users.filter(user => user.id !== userId);
+    this.setState({ users });
+    alert(`deleted ${userId}`);
+  };
+
   render() {
     return (
       <div>
         <HomePage />
+        <UserPage users={this.state.users} onClickDelete={this.onClickDelete} />
       </div>
     );
   }
