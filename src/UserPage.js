@@ -2,9 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { user } from "./types";
 
-const UserPage = ({ heading, users, onClickDelete, onClickUser }) => (
+const UserPage = ({
+  heading,
+  users,
+  onClickDelete,
+  onClickUser,
+  onClickAddUser
+}) => (
   <div>
     <h1>{heading}</h1>
+    <button onClick={onClickAddUser}>Add User</button>
     <ul>
       {users.map(user => {
         return (
@@ -31,7 +38,8 @@ UserPage.propTypes = {
   heading: PropTypes.string,
   users: PropTypes.arrayOf(user).isRequired,
   onClickDelete: PropTypes.func.isRequired,
-  onClickUser: PropTypes.func.isRequired
+  onClickUser: PropTypes.func.isRequired,
+  onClickAddUser: PropTypes.func.isRequired
 };
 
 UserPage.defaultProps = {

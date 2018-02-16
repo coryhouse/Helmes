@@ -33,10 +33,24 @@ class App extends React.Component {
 
   handleManageUserSubmit = (event, user) => {
     event.preventDefault();
-    const users = this.state.users.map(u => {
-      return user.id === u.id ? user : u;
-    });
-    this.setState({ users });
+    const isNewUser = !user.id;
+    let users;
+    if (isNewUser) {
+      // Hack - Assign ID via random number. In real app, make AJAX call
+      user.id = Math.floor(Math.random() * 20000);
+      users = [...this.state.users, user];
+    } else {
+      users = this.state.users.map(u => {
+        return user.id === u.id ? user : u;
+      });
+    }
+    this.setState({ users, page: "users" });
+    alert("User saved.");
+  };
+
+  handleClickAddUser = event => {
+    event.preventDefault();
+    this.setState({ page: "manageUser", selectedUserId: null });
   };
 
   getCurrentPage() {
@@ -48,6 +62,7 @@ class App extends React.Component {
           <UserPage
             users={this.state.users}
             onClickDelete={this.onClickDelete}
+            onClickAddUser={this.handleClickAddUser}
             onClickUser={this.handleClickUser}
           />
         );
