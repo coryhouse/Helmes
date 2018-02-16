@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { user } from "./types";
 
-const UserPage = ({ heading, users, onClickDelete }) => (
+const UserPage = ({ heading, users, onClickDelete, onClickUser }) => (
   <div>
     <h1>{heading}</h1>
     <ul>
@@ -16,7 +16,10 @@ const UserPage = ({ heading, users, onClickDelete }) => (
             >
               Delete
             </button>{" "}
-            <a href="#edit-user">{user.name}</a> - {user.email}
+            <a href="#edit-user" onClick={event => onClickUser(event, user.id)}>
+              {user.name}
+            </a>{" "}
+            - {user.email}
           </li>
         );
       })}
@@ -27,7 +30,8 @@ const UserPage = ({ heading, users, onClickDelete }) => (
 UserPage.propTypes = {
   heading: PropTypes.string,
   users: PropTypes.arrayOf(user).isRequired,
-  onClickDelete: PropTypes.func.isRequired
+  onClickDelete: PropTypes.func.isRequired,
+  onClickUser: PropTypes.func.isRequired
 };
 
 UserPage.defaultProps = {

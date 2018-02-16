@@ -2,6 +2,7 @@ import React from "react";
 import HomePage from "./HomePage";
 import UserPage from "./UserPage";
 import Navigation from "./Navigation";
+import ManageUser from "./ManageUser";
 
 class App extends React.Component {
   state = {
@@ -10,6 +11,7 @@ class App extends React.Component {
       { id: 2, name: "Bob", email: "bob@gmail.com" },
       { id: 3, name: "Jane", email: "jane@gmail.com" }
     ],
+    selectedUserId: null,
     page: "home"
   };
 
@@ -24,6 +26,11 @@ class App extends React.Component {
     this.setState({ page });
   };
 
+  handleClickUser = (event, userId) => {
+    event.preventDefault();
+    this.setState({ selectedUserId: userId, page: "manageUser" });
+  };
+
   getCurrentPage() {
     switch (this.state.page) {
       case "home":
@@ -33,8 +40,21 @@ class App extends React.Component {
           <UserPage
             users={this.state.users}
             onClickDelete={this.onClickDelete}
+            onClickUser={this.handleClickUser}
           />
         );
+      case "manageUser":
+        let user = {
+          id: "",
+          name: "",
+          email: ""
+        };
+        if (this.state.selectedUserId) {
+          user = this.state.users.find(
+            user => user.id === this.state.selectedUserId
+          );
+        }
+        return <ManageUser user={user} />;
       default:
         throw new Error("Unknown page passed:" + this.state.page);
     }
