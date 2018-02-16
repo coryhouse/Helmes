@@ -31,6 +31,14 @@ class App extends React.Component {
     this.setState({ selectedUserId: userId, page: "manageUser" });
   };
 
+  handleManageUserSubmit = (event, user) => {
+    event.preventDefault();
+    const users = this.state.users.map(u => {
+      return user.id === u.id ? user : u;
+    });
+    this.setState({ users });
+  };
+
   getCurrentPage() {
     switch (this.state.page) {
       case "home":
@@ -54,7 +62,9 @@ class App extends React.Component {
             user => user.id === this.state.selectedUserId
           );
         }
-        return <ManageUser user={user} />;
+        return (
+          <ManageUser user={user} onSubmit={this.handleManageUserSubmit} />
+        );
       default:
         throw new Error("Unknown page passed:" + this.state.page);
     }
