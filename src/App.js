@@ -1,6 +1,7 @@
 import React from "react";
 import HomePage from "./HomePage";
 import UserPage from "./UserPage";
+import Navigation from "./Navigation";
 
 class App extends React.Component {
   state = {
@@ -9,7 +10,7 @@ class App extends React.Component {
       { id: 2, name: "Bob", email: "bob@gmail.com" },
       { id: 3, name: "Jane", email: "jane@gmail.com" }
     ],
-    page: "HomePage"
+    page: "home"
   };
 
   onClickDelete = (event, userId) => {
@@ -18,12 +19,32 @@ class App extends React.Component {
     alert(`deleted ${userId}`);
   };
 
+  handleNavClick = (event, page) => {
+    event.preventDefault();
+    this.setState({ page });
+  };
+
+  getCurrentPage() {
+    switch (this.state.page) {
+      case "home":
+        return <HomePage />;
+      case "users":
+        return (
+          <UserPage
+            users={this.state.users}
+            onClickDelete={this.onClickDelete}
+          />
+        );
+      default:
+        throw new Error("Unknown page passed:" + this.state.page);
+    }
+  }
+
   render() {
-    const { users } = this.state;
     return (
       <div>
-        <HomePage />
-        <UserPage users={users} onClickDelete={this.onClickDelete} />
+        <Navigation onNavClick={this.handleNavClick} />
+        {this.getCurrentPage()}
       </div>
     );
   }

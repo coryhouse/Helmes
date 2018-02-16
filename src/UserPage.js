@@ -16,7 +16,7 @@ const UserPage = ({ heading, users, onClickDelete }) => (
             >
               Delete
             </button>{" "}
-            {user.name} - {user.email}
+            <a href="#edit-user">{user.name}</a> - {user.email}
           </li>
         );
       })}
