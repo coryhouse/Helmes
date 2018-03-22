@@ -1,15 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { user } from "./propTypes";
 
 class Users extends React.Component {
   static propTypes = {
-    users: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired
-      })
-    ).isRequired,
+    users: PropTypes.arrayOf(user).isRequired,
     onDeleteClick: PropTypes.func.isRequired
   };
 
