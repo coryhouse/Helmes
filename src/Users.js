@@ -1,22 +1,21 @@
 import React from "react";
 
-function userItem(user) {
-  return (
-    <div>
-      Name: {user.name}
-      <br />
-      Email: {user.email}
-    </div>
-  );
-}
-
 class Users extends React.Component {
+  userItem(user, onDeleteClick) {
+    return (
+      <div key={user.id}>
+        <button onClick={() => onDeleteClick(user.id)}>Delete</button> Name: {user.name}
+        <br />
+        Email: {user.email}
+      </div>
+    );
+  }
+
   render() {
-    // const { name, email } = this.props.user;
     return (
       <div>
         <h1>Users</h1>
-        {this.props.users.map(user => userItem(user))}
+        {this.props.users.map(user => this.userItem(user, this.props.onDeleteClick))}
       </div>
     );
   }

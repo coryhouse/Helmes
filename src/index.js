@@ -1,19 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import registerServiceWorker from './registerServiceWorker';
+import Navigation from "./Navigation";
+import registerServiceWorker from "./registerServiceWorker";
 import Users from "./Users";
 
 class App extends React.Component {
-  render() {
-    const users = [
-      { name: "Cory", email: "housecor@gmail.com" },
-      { name: "Sally", email: "sally@gmail.com" },
-      { name: "Tammy", email: "tammy@gmail.com" }
-    ];
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [
+        { id: 1, name: "Cory", email: "housecor@gmail.com" },
+        { id: 2, name: "Sally", email: "sally@gmail.com" },
+        { id: 3, name: "Tammy", email: "tammy@gmail.com" }
+      ]
+    };
+  }
 
+  onDeleteClick = id => {
+    const users = this.state.users.filter(user => user.id !== id);
+    this.setState({ users });
+  };
+
+  render() {
     return (
       <div>
-        <Users users={users} />
+        <Navigation />
+        <Users users={this.state.users} onDeleteClick={this.onDeleteClick} />
       </div>
     );
   }
