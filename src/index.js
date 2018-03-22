@@ -4,6 +4,7 @@ import Navigation from "./Navigation";
 import registerServiceWorker from "./registerServiceWorker";
 import Users from "./Users";
 import HomePage from "./HomePage";
+import ManageUser from "./ManageUser";
 
 class App extends React.Component {
   constructor(props) {
@@ -28,6 +29,12 @@ class App extends React.Component {
     this.setState({ currentPage: page });
   };
 
+  handleUserClick = (event, userId) => {
+    event.preventDefault();
+    this.setState({ currentPage: "ManageUser" });
+    alert(userId);
+  };
+
   getPage() {
     switch (this.state.currentPage) {
       case "HomePage":
@@ -37,8 +44,11 @@ class App extends React.Component {
           <Users
             users={this.state.users}
             onDeleteClick={this.handleDeleteUserClick}
+            onUserClick={this.handleUserClick}
           />
         );
+      case "ManageUser":
+        return <ManageUser />;
       default:
         throw new Error("Unknown page:" + this.state.currentPage);
     }
