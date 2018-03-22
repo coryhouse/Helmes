@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { user } from "./propTypes";
 
 class ManageUser extends Component {
+  static propTypes = {
+    user: user
+  };
   render() {
     return (
       <div>
