@@ -5,17 +5,25 @@ import { user } from "./propTypes";
 class Users extends React.Component {
   static propTypes = {
     users: PropTypes.arrayOf(user).isRequired,
-    onDeleteClick: PropTypes.func.isRequired
+    onDeleteClick: PropTypes.func.isRequired,
+    onUserClick: PropTypes.func.isRequired
   };
 
-  userItem(user, onDeleteClick) {
+  userItem(user) {
     return (
-      <div key={user.id}>
-        <button onClick={() => onDeleteClick(user.id)}>Delete</button> Name:{" "}
-        {user.name}
-        <br />
-        Email: {user.email}
-      </div>
+      <tr key={user.id}>
+        <td>
+          <button onClick={() => this.props.onDeleteClick(user.id)}>
+            Delete
+          </button>
+        </td>
+        <td>
+          <a href="#" onClick={event => this.props.onUserClick(event, user.id)}>
+            {user.name}
+          </a>
+        </td>
+        <td>{user.email}</td>
+      </tr>
     );
   }
 
@@ -23,9 +31,16 @@ class Users extends React.Component {
     return (
       <div>
         <h1>Users</h1>
-        {this.props.users.map(user =>
-          this.userItem(user, this.props.onDeleteClick)
-        )}
+        <table>
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>{this.props.users.map(user => this.userItem(user))}</tbody>
+        </table>
       </div>
     );
   }
