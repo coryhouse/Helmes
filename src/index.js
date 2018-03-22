@@ -28,18 +28,27 @@ class App extends React.Component {
     this.setState({ currentPage: page });
   };
 
-  render() {
-    return (
-      <div>
-        <Navigation isAdmin onLinkClick={this.handleNavigationClick} />
-        {this.state.currentPage === "HomePage" ? (
-          <HomePage />
-        ) : (
+  getPage() {
+    switch (this.state.currentPage) {
+      case "HomePage":
+        return <HomePage />;
+      case "Users":
+        return (
           <Users
             users={this.state.users}
             onDeleteClick={this.handleDeleteUserClick}
           />
-        )}
+        );
+      default:
+        throw new Error("Unknown page:" + this.state.currentPage);
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <Navigation isAdmin onLinkClick={this.handleNavigationClick} />
+        {this.getPage()}
       </div>
     );
   }

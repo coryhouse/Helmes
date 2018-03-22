@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Navigation = ({ isAdmin, onLinkClick }) => (
   <ul>
@@ -16,5 +17,14 @@ const Navigation = ({ isAdmin, onLinkClick }) => (
     )}
   </ul>
 );
+
+Navigation.propTypes = {
+  isAdmin: PropTypes.bool,
+  onLinkClick: PropTypes.func.isRequired
+};
+
+Navigation.defaultProps = {
+  isAdmin: false
+};
 
 export default Navigation;
