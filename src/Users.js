@@ -6,7 +6,8 @@ class Users extends React.Component {
   static propTypes = {
     users: PropTypes.arrayOf(user).isRequired,
     onDeleteClick: PropTypes.func.isRequired,
-    onUserClick: PropTypes.func.isRequired
+    onUserClick: PropTypes.func.isRequired,
+    onAddUserClick: PropTypes.func.isRequired
   };
 
   userItem(user) {
@@ -31,6 +32,7 @@ class Users extends React.Component {
     return (
       <div>
         <h1>Users</h1>
+        <button onClick={this.props.onAddUserClick}>Add User</button>
         <table>
           <thead>
             <tr>
