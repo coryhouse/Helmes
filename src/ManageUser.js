@@ -4,9 +4,11 @@ import { user } from "./propTypes";
 
 class ManageUser extends Component {
   static propTypes = {
-    user: user
+    user: user.isRequired
   };
+
   render() {
+    const { name, email } = this.props.user;
     return (
       <div>
         <h1>Manage User</h1>
@@ -14,13 +16,13 @@ class ManageUser extends Component {
           <div>
             <label>Name</label>
             <br />
-            <input type="text" />
+            <input type="text" value={name} />
           </div>
 
           <div>
             <label>Email</label>
             <br />
-            <input type="text" />
+            <input type="text" value={email} />
           </div>
 
           <input type="submit" value="Save" />
