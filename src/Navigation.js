@@ -1,13 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 
-const Navigation = ({ isAdmin }) => (
+const Navigation = ({ isAdmin, onLinkClick }) => (
   <ul>
     <li>
-      <a href="#">Home</a>
+      <a href="/" onClick={event => onLinkClick(event, "HomePage")}>
+        Home
+      </a>
     </li>
     {isAdmin && (
       <li>
-        <a href="#">Users</a>
+        <a href="/users" onClick={event => onLinkClick(event, "Users")}>
+          Users
+        </a>
       </li>
     )}
   </ul>
