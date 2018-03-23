@@ -4,11 +4,14 @@ import { user } from "./propTypes";
 
 class ManageUser extends Component {
   static propTypes = {
-    user: user.isRequired
+    user: user.isRequired,
+    onNameChange: PropTypes.func.isRequired,
+    onEmailChange: PropTypes.func.isRequired
   };
 
   render() {
-    const { name, email } = this.props.user;
+    const { user, onNameChange, onEmailChange } = this.props;
+    const { name, email } = user;
     return (
       <div>
         <h1>Manage User</h1>
@@ -16,13 +19,13 @@ class ManageUser extends Component {
           <div>
             <label>Name</label>
             <br />
-            <input type="text" value={name} />
+            <input type="text" value={name} onChange={onNameChange} />
           </div>
 
           <div>
             <label>Email</label>
             <br />
-            <input type="text" value={email} />
+            <input type="text" value={email} onChange={onEmailChange} />
           </div>
 
           <input type="submit" value="Save" />
