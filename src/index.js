@@ -26,8 +26,10 @@ class App extends React.Component {
     };
   }
 
-  handleDeleteUserClick = id => {
-    const users = this.state.users.filter(user => user.id !== id);
+  handleDeleteUserClick = event => {
+    const users = this.state.users.filter(
+      user => user.id !== Number(event.target.dataset.userid)
+    );
     this.setState({ users });
   };
 
@@ -47,6 +49,22 @@ class App extends React.Component {
     this.setState({ currentPage: "ManageUser" });
   };
 
+  handleNameChange = event => {
+    // const user = Object.assign({}, this.state.currentUser, {
+    //   name: event.target.value
+    // });
+    const currentUser = { ...this.state.currentUser, name: event.target.value };
+    this.setState({ currentUser });
+  };
+
+  handleEmailChange = event => {
+    const currentUser = {
+      ...this.state.currentUser,
+      email: event.target.value
+    };
+    this.setState({ currentUser });
+  };
+
   getPage() {
     switch (this.state.currentPage) {
       case "HomePage":
@@ -61,7 +79,13 @@ class App extends React.Component {
           />
         );
       case "ManageUser":
-        return <ManageUser user={this.state.currentUser} />;
+        return (
+          <ManageUser
+            user={this.state.currentUser}
+            onNameChange={this.handleNameChange}
+            onEmailChange={this.handleEmailChange}
+          />
+        );
       default:
         throw new Error("Unknown page:" + this.state.currentPage);
     }

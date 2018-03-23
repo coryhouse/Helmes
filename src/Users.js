@@ -14,7 +14,7 @@ class Users extends React.Component {
     return (
       <tr key={user.id}>
         <td>
-          <button onClick={() => this.props.onDeleteClick(user.id)}>
+          <button data-userid={user.id} onClick={this.props.onDeleteClick}>
             Delete
           </button>
         </td>
