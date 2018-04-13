@@ -5,12 +5,12 @@ class Navigation extends React.Component {
     return (
       <ul>
         <li>
-          <a href="/" onClick={this.props.onNavClick}>
+          <a href="/" name="Home" onClick={this.props.onNavClick}>
             Home
           </a>
         </li>
         <li>
-          <a href="/users" onClick={this.props.onNavClick}>
+          <a href="/users" name="Users" onClick={this.props.onNavClick}>
             Users
           </a>
         </li>

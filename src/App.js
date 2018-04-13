@@ -9,6 +9,8 @@ class App extends React.Component {
     this.state = {
       currentPage: "Home"
     };
+
+    // this.handleNavClick = this.handleNavClick.bind(this);
   }
 
   getCurrentPage() {
@@ -22,9 +24,11 @@ class App extends React.Component {
     }
   }
 
-  handleNavClick(event) {
-    alert("clicked");
-  }
+  handleNavClick = event => {
+    event.preventDefault();
+    this.setState({ currentPage: event.target.name });
+    //alert();
+  };
 
   render() {
     return (
