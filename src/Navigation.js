@@ -5,10 +5,14 @@ class Navigation extends React.Component {
     return (
       <ul>
         <li>
-          <a href="/">Home</a>
+          <a href="/" onClick={this.props.onNavClick}>
+            Home
+          </a>
         </li>
         <li>
-          <a href="/users">Users</a>
+          <a href="/users" onClick={this.props.onNavClick}>
+            Users
+          </a>
         </li>
       </ul>
     );

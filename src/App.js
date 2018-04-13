@@ -22,10 +22,14 @@ class App extends React.Component {
     }
   }
 
+  handleNavClick(event) {
+    alert("clicked");
+  }
+
   render() {
     return (
       <div>
-        <Navigation />
+        <Navigation onNavClick={this.handleNavClick} />
         {this.getCurrentPage()}
       </div>
     );
