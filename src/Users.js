@@ -5,7 +5,8 @@ class Users extends Component {
   static propTypes = {
     users: PropTypes.array.isRequired,
     onDeleteUserClick: PropTypes.func.isRequired,
-    onUserClick: PropTypes.func.isRequired
+    onUserClick: PropTypes.func.isRequired,
+    onAddUserClick: PropTypes.func.isRequired
   };
 
   displayUserTable() {
@@ -21,7 +22,7 @@ class Users extends Component {
         <tbody>
           {this.props.users.map(user => {
             return (
-              <tr>
+              <tr key={user.id}>
                 <td>
                   <a
                     href="/delete"
@@ -32,7 +33,10 @@ class Users extends Component {
                   </a>
                 </td>
                 <td>
-                  <a href="/user" onClick={this.props.onUserClick}>
+                  <a
+                    href="/user"
+                    onClick={event => this.props.onUserClick(event, user.id)}
+                  >
                     {user.name}
                   </a>
                 </td>
@@ -46,10 +50,12 @@ class Users extends Component {
   }
 
   render() {
+    const { onAddUserClick, users } = this.props;
     return (
       <div>
         <h1>Users</h1>
-        {this.props.users.length === 0 ? (
+        <button onClick={onAddUserClick}>Add User</button>
+        {users.length === 0 ? (
           <div>No Users Found</div>
         ) : (
           this.displayUserTable()
