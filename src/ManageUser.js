@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { user } from "./propTypes";
 
 class ManageUser extends Component {
+  constructor(props) {
+    super(props);
+    this.nameInputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.nameInputRef.current.focus();
+  }
+
   render() {
-    const { onSaveUser, user, onUserChange } = this.props;
+    const { errors, onSaveUser, user, onUserChange } = this.props;
     return (
       <form onSubmit={onSaveUser}>
         <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={user.name}
-          onChange={onUserChange}
-        />
+        <input ref={this.nameInputRef} type="text" name="name" />
+        {errors.name}
 
         <label>Email</label>
         <input
@@ -21,6 +27,7 @@ class ManageUser extends Component {
           value={user.email}
           onChange={onUserChange}
         />
+        {errors.email}
 
         <input type="submit" value="Save" />
       </form>
@@ -29,9 +36,15 @@ class ManageUser extends Component {
 }
 
 ManageUser.propTypes = {
-  user: PropTypes.object.isRequired,
+  errors: PropTypes.object,
+  user: user.isRequired,
   onSaveUser: PropTypes.func.isRequired,
   onUserChange: PropTypes.func.isRequired
+};
+
+ManageUser.defaultProps = {
+  errors: {},
+  onSaveUser: function() {}
 };
 
 export default ManageUser;

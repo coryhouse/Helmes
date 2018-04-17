@@ -3,21 +3,27 @@ import HomePage from "./HomePage";
 import Navigation from "./Navigation";
 import Users from "./Users";
 import ManageUser from "./ManageUser";
+import { saveUser } from "./api/userApi";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: "Home",
-      users: [
-        { id: 1, name: "Cory", email: "cory@example.com" },
-        { id: 2, name: "Sally", email: "sally@example.com" },
-        { id: 3, name: "Bob", email: "bob@example.com" }
-      ],
-      currentUser: null
-    };
+  state = {
+    currentPage: "Home",
+    users: [
+      { id: 1, name: "Cory", email: "cory@example.com" },
+      { id: 2, name: "Sally", email: "sally@example.com" },
+      { id: 3, name: "Bob", email: "bob@example.com" }
+    ],
+    currentUser: null,
+    loggedInUser: {
+      id: null,
+      username: null,
+      isAdmin: true
+    },
+    errors: {}
+  };
 
-    // this.handleNavClick = this.handleNavClick.bind(this);
+  componentDidMount() {
+    alert("mounted");
   }
 
   handleDeleteUserClick = event => {
@@ -42,12 +48,30 @@ class App extends React.Component {
 
   handleSaveUser = event => {
     event.preventDefault();
+    const { currentUser } = this.state;
+    if (!currentUser.name) {
+      this.setState({ errors: { name: "Name is Required." } });
+      return;
+    }
+    if (!currentUser.email) {
+      this.setState({ errors: { email: "Email is Required." } });
+      return;
+    }
     // Map over list of users and replace the currentUser in the array.
     // Use ternary to determine if we're looking at the current user.
-    const { currentUser } = this.state;
-    const users = this.state.users.map(
-      user => (user.id === currentUser.id ? currentUser : user)
-    );
+    let users;
+    let savedUser;
+    if (currentUser.id) {
+      // editing existing user
+      savedUser = saveUser(currentUser);
+      users = this.state.users.map(
+        user => (user.id === savedUser.id ? savedUser : user)
+      );
+    } else {
+      // adding a new user
+      savedUser = saveUser(currentUser);
+      users = [...this.state.users, savedUser];
+    }
     this.setState({ users, currentPage: "Users" });
   };
 
@@ -73,6 +97,7 @@ class App extends React.Component {
         return (
           <ManageUser
             user={this.state.currentUser}
+            errors={this.state.errors}
             onUserChange={this.handleUserChange}
             onSaveUser={this.handleSaveUser}
           />
@@ -85,13 +110,17 @@ class App extends React.Component {
   handleNavClick = event => {
     event.preventDefault();
     this.setState({ currentPage: event.target.name });
-    //alert();
   };
 
   render() {
+    const navigationProps = {
+      loggedInUser: this.state.loggedInUser,
+      onNavClick: this.handleNavClick
+    };
+
     return (
       <div>
-        <Navigation onNavClick={this.handleNavClick} />
+        <Navigation {...navigationProps} />
         {this.getCurrentPage()}
       </div>
     );
